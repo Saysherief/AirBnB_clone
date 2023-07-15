@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""Entry point of the command interpreter."""
-import cmd
-import json
+"""Defines the HBnB console."""
 import cmd
 import re
 from shlex import split
@@ -34,7 +32,11 @@ def parse(arg):
 
 
 class HBNBCommand(cmd.Cmd):
-    """Class for HBNB command interpreter"""
+    """Defines the HolbertonBnB command interpreter.
+
+    Attributes:
+        prompt (str): The command prompt.
+    """
 
     prompt = "(hbnb) "
     __classes = {
@@ -47,16 +49,8 @@ class HBNBCommand(cmd.Cmd):
         "Review"
     }
 
-    def do_quit(self, arg):
-        """Quit command to exit the program."""
-        return True
-
-    def do_EOF(self, arg):
-        """EOF command to exit the program."""
-        return True
-
     def emptyline(self):
-        """Do nothing when the empty line is entered."""
+        """Do nothing upon receiving an empty line."""
         pass
 
     def default(self, arg):
@@ -79,6 +73,15 @@ class HBNBCommand(cmd.Cmd):
                     return argdict[command[0]](call)
         print("*** Unknown syntax: {}".format(arg))
         return False
+
+    def do_quit(self, arg):
+        """Quit command to exit the program."""
+        return True
+
+    def do_EOF(self, arg):
+        """EOF signal to exit the program."""
+        print("")
+        return True
 
     def do_create(self, arg):
         """Usage: create <class>
@@ -203,5 +206,5 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     HBNBCommand().cmdloop()
