@@ -24,20 +24,21 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel"""
-        if arg == "":
+        """Create a new instance of the given class,
+        and save it to the JSON file.
+        """
+        if not arg:
             print("** class name missing **")
             return
+        class_name = arg.split()[0]
         try:
-            cls = arg.split()[0]
-            if cls not in HBNBCommand.valid_models:
-                print("** class doesn't exist **")
-                return
-            new_instance = models.classes[cls]()
-            new_instance.save()
-            print(new_instance.id)
-        except Exception as e:
-            print(e)
+            class_obj = getattr(models, class_name)
+        except AttributeError:
+            print("** class doesn't exist **")
+            return
+        new_instance = class_obj()
+        new_instance.save()
+        print(new_instance.id)
 
     def do_show(self, arg):
         """Prints the string representation of an instance"""
