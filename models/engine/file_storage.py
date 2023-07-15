@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Defines a FileStorage Class."""
 import json
-import os
-from datetime import datetime
+from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -16,8 +16,16 @@ class FileStorage:
     def all(self):
         """
         Returns the dictionry __objects storing all objects by class name & ID
+        Overridden to include User objects
         """
-        return FileStorage.__objects
+        rdict = {}
+        for k, v in FileStorage.__objects.items():
+            rdict[k] = v.to_dict()
+        # User objects are added below
+        for k, v in FileStorage.__objects.items():
+            if isinstance(v, User):
+                rdict[k] = v.to_dict()
+        return rdict
 
     def new(self, obj):
         """
@@ -45,20 +53,10 @@ class FileStorage:
                 rdict = json.load(myfile)
                 tform = "%Y-%m-%dT%H:%M:%S.%f"
                 for k, v in rdict.items():
-                    cl_name, obj_id = k.split('.')
-                    loc = locals()
-                    glo = globals()
-                    m = __import__('models.base_model', glo, loc, [cl_name], 0)
-                    cl_ = getattr(m, cl_name)
-                    cr_at = datetime.strptime(rdict[k]['created_at'], tform)
-                    rdict[k]['created_at'] = cr_at
-                    up_at = datetime.strptime(rdict[k]['updated_at'], tform)
-                    rdict[k]['updated_at'] = up_at
-                    obj = cl_(**v)
-                    self.__objects[k] = obj
+                    if "User" in v["__class__"]:
+                        obj = User(**v)
+                    else:
+                        obj = BaseModel(**v)
+                    FileStorage.__objects[k] = obj
         except FileNotFoundError:
             pass
-
-
-storage = FileStorage()
-storage.reload()
