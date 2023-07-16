@@ -2,6 +2,7 @@
 """Define test cases for the User class."""
 import unittest
 from models.user import User
+from models.base_model import BaseModel
 import os
 import models
 from datetime import datetime
