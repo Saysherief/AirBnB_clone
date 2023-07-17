@@ -11,8 +11,8 @@ After implimenting the AirBnB project the one will aquire the knowldege in deplo
 * manage (create, update, destroy, etc) objects via a console / command interpreter
 * store and persist objects to a file (JSON file)
 
-Example of usage on the console
-<me@ubuntu:~/AirBnB$ ./console.py
+Example of usage on the console.py
+`me@ubuntu:~/AirBnB$ ./console.py
 (hbnb) all MyModel
 ** class doesn't exist **
 (hbnb) show BaseModel
@@ -37,4 +37,4 @@ Example of usage on the console
 (hbnb) destroy BaseModel 49faff9a-6318-451f-87b6-910505c55907
 (hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
 ** no instance found **
-(hbnb) >
+(hbnb) `
