@@ -1,4 +1,5 @@
-#AirBnB clone - Web static
+AirBnB clone - Web static
+=========================
 
 The first step is to “design” / “sketch” / “prototype” each element:
 
